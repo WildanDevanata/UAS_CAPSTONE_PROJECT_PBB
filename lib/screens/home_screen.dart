@@ -8,6 +8,7 @@ import 'add_water_screen.dart';
 import 'history_screen.dart';
 import 'analytics_screen.dart';
 import 'settings_screen.dart';
+import '../services/notification_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -60,6 +61,27 @@ class _HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(AppConstants.appName),
         centerTitle: true,
+        actions: [
+          // ✅ BUTTON TEST NOTIFIKASI
+          IconButton(
+            icon: const Icon(Icons.notifications_active),
+            tooltip: 'Test Notifikasi',
+            onPressed: () async {
+              await NotificationService.instance.showTestNotification();
+
+              if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'Test notifikasi dikirim! Cek notification panel.',
+                    ),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              }
+            },
+          ),
+        ],
       ),
       body: Consumer<WaterProvider>(
         builder: (context, provider, child) {

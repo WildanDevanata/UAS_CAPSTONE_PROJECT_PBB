@@ -14,5 +14,4 @@ class AppConstants {
   static const int dbVersion = 1;
   static const String appVersion = '1.0.0'; // ← Tambah ini
   // API - Ganti dengan URL server Anda
-  static const String apiBaseUrl = 'http://your-server.com/api';
 }

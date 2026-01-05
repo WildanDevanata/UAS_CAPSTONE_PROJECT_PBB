@@ -3,19 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../models/water_log.dart';
 import '../services/database_service.dart';
-import '../services/api_service.dart';
+// ❌ HAPUS: import '../services/api_service.dart';
 import '../services/notification_service.dart';
 import '../utils/helpers.dart';
 
-// Proper state management dengan Provider
 class WaterProvider extends ChangeNotifier {
   final DatabaseService _db = DatabaseService.instance;
-  final ApiService _api = ApiService.instance;
+  // ❌ HAPUS: final ApiService _api = ApiService.instance;
   final NotificationService _notif = NotificationService.instance;
 
-  // State variables dengan naming yang jelas
   List<WaterLog> _todayLogs = [];
-  final double _dailyTarget = 2000.0;
+  double _dailyTarget = 2000.0;
   bool _isLoading = false;
   String? _errorMessage;
 
@@ -25,7 +23,6 @@ class WaterProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
 
-  // Calculated values
   double get totalToday {
     return _todayLogs.fold(0.0, (sum, log) => sum + log.amount);
   }
@@ -36,12 +33,10 @@ class WaterProvider extends ChangeNotifier {
 
   bool get targetReached => totalToday >= _dailyTarget;
 
-  // Initialize
   Future<void> initialize() async {
     await loadTodayLogs();
   }
 
-  // Load today's logs
   Future<void> loadTodayLogs() async {
     try {
       _setLoading(true);
@@ -58,34 +53,24 @@ class WaterProvider extends ChangeNotifier {
     }
   }
 
-  // Add water log dengan camera integration
+  // ✅ UPDATED: Tanpa API sync
   Future<void> addWaterLog({required double amount, File? photo}) async {
     try {
       _setLoading(true);
       _errorMessage = null;
 
-      // Create log
       final log = WaterLog(
         dateTime: DateTime.now(),
         amount: amount,
         photoPath: photo?.path,
       );
 
-      // Save to local database
+      // Save to local database ONLY
       await _db.insertWaterLog(log);
-
-      // Sync to API (dengan error handling)
-      try {
-        await _api.syncWaterLog(log);
-      } catch (e) {
-        debugPrint('API sync failed: $e');
-        // Continue anyway, akan di-sync nanti
-      }
 
       // Reload data
       await loadTodayLogs();
 
-      // Show notification jika target tercapai
       if (targetReached) {
         await _notif.showNotification(
           title: 'Selamat! 🎉',
@@ -100,7 +85,6 @@ class WaterProvider extends ChangeNotifier {
     }
   }
 
-  // Delete log
   Future<void> deleteLog(int id) async {
     try {
       _setLoading(true);
@@ -116,7 +100,6 @@ class WaterProvider extends ChangeNotifier {
     }
   }
 
-  // Take photo with camera
   Future<File?> takePhoto() async {
     try {
       final picker = ImagePicker();
@@ -138,7 +121,6 @@ class WaterProvider extends ChangeNotifier {
     }
   }
 
-  // Get logs for charts (last 7 days)
   Future<Map<DateTime, double>> getWeeklyData() async {
     try {
       final now = DateTime.now();
@@ -147,7 +129,6 @@ class WaterProvider extends ChangeNotifier {
 
       final logs = await _db.getLogsByDateRange(startDate, endDate);
 
-      // Group by date
       final Map<DateTime, double> data = {};
 
       for (var log in logs) {
@@ -167,7 +148,6 @@ class WaterProvider extends ChangeNotifier {
     }
   }
 
-  // Helper untuk set loading state
   void _setLoading(bool value) {
     _isLoading = value;
     notifyListeners();

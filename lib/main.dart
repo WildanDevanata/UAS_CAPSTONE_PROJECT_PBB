@@ -5,13 +5,18 @@ import 'providers/settings_provider.dart';
 import 'services/notification_service.dart';
 import 'screens/home_screen.dart';
 import 'utils/constants.dart';
+import 'dart:io';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() async {
   // Ensure Flutter is initialized
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize notification service
-  await NotificationService.instance.initialize();
+  // ✅ Initialize notification service dengan await
+  final notifInitialized = await NotificationService.instance.initialize();
+
+  // Debug log
+  debugPrint('Notification service initialized: $notifInitialized');
 
   runApp(const MyApp());
 }
