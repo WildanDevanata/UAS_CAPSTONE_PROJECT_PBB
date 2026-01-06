@@ -66,19 +66,30 @@
 
 ### Add Water Log
 ![Add Water](assets/images/add_water.png)
-*Form pencatatan konsumsi air dengan kamera integration*
+<p align="left">
+  <strong>Form pencatatan konsumsi air dengan kamera integration</strong>
+</p>
+
 
 ### History & Timeline
 ![History](assets/images/history.png)
-*Riwayat konsumsi air dengan detail lengkap*
+<p align="left">
+  <strong>Riwayat konsumsi air dengan detail lengkap</strong>
+</p>
+
 
 ### Analytics Dashboard
 ![Analytics](assets/images/analytics.png)
-*Grafik 7 hari terakhir dan statistik konsumsi*
+<p align="left">
+  <strong>Grafik 7 hari terakhir dan statistik konsumsi</strong>
+</p>
 
 ### Settings
 ![Settings](assets/images/settings.png)
-*Pengaturan target harian dan notifikasi*
+<p align="left">
+  <strong>Pengaturan target harian dan notifikasi</strong>
+</p>
+
 
 ---
 
@@ -95,9 +106,9 @@
 
 | Build Type | Link | Notes |
 |------------|------|-------|
-| **Release APK** | [Download v1.0.0](https://drive.google.com/file/d/YOUR_LINK_HERE) | Untuk testing & demo |
-| **Debug APK** | [Download Debug](https://drive.google.com/file/d/YOUR_LINK_HERE) | Untuk development |
-| **AAB Bundle** | [Download AAB](https://drive.google.com/file/d/YOUR_LINK_HERE) | Untuk Google Play Store |
+| **Release APK** | [Download v1.0.0](https://drive.google.com/file/d/1VEOdDUlh_R1q7jk02sXiR9e0otrq63oM/view?usp=sharing) | Untuk testing & demo |
+| **Debug APK** | [Download Debug](https://drive.google.com/file/d/1vgQ3SrK0zdEv0tAq7QTxg64dbCJHyU2D/view?usp=sharing) | Untuk development |
+
 
 #### 📋 Installation Steps:
 
