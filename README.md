@@ -1,7 +1,7 @@
 # 💧 WaterLog - Aplikasi Pelacak Konsumsi Air
 
 <p align="center">
-  <img src="assets/images/logo.png" alt="WaterLog Logo" width="200"/>
+  <img src="assets/images/logo512.jpg" alt="WaterLog Logo" width="200"/>
 </p>
 
 <p align="center">
