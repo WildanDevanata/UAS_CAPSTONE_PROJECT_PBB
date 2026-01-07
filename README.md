@@ -106,8 +106,8 @@
 
 | Build Type | Link | Notes |
 |------------|------|-------|
-| **Release APK** | [Download v1.0.0](https://drive.google.com/file/d/1VEOdDUlh_R1q7jk02sXiR9e0otrq63oM/view?usp=sharing) | Untuk testing & demo |
-| **Debug APK** | [Download Debug](https://drive.google.com/file/d/1vgQ3SrK0zdEv0tAq7QTxg64dbCJHyU2D/view?usp=sharing) | Untuk development |
+| **Release APK** | [Download v1.0.0](https://drive.google.com/file/d/1nv5clTVG-wnhcUWDw1dzGUwjG57WKAuH/view?usp=sharing) | Untuk testing & demo |
+| **Debug APK** | [Download Debug](https://drive.google.com/file/d/1ggToTtP1cO97wcnsNNd4UDFoJyraMjvv/view?usp=sharing) | Untuk development |
 
 
 #### 📋 Installation Steps:
