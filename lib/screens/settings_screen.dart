@@ -44,7 +44,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
       reminderInterval: _reminderInterval,
     );
 
-    await context.read<SettingsProvider>().updateSettings(newSettings);
+    // ✅ Pass context untuk sync dengan WaterProvider
+    await context.read<SettingsProvider>().updateSettings(
+      newSettings,
+      context, // ✅ ADD context parameter
+    );
 
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(

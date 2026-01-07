@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/user_settings.dart';
 import '../services/database_service.dart';
 import '../services/notification_service.dart';
+import 'water_provider.dart'; // ✅ Import this
 
 class SettingsProvider extends ChangeNotifier {
   final DatabaseService _db = DatabaseService.instance;
@@ -13,12 +15,10 @@ class SettingsProvider extends ChangeNotifier {
   UserSettings get settings => _settings;
   bool get isLoading => _isLoading;
 
-  // Initialize
   Future<void> initialize() async {
     await loadSettings();
   }
 
-  // Load settings
   Future<void> loadSettings() async {
     try {
       _isLoading = true;
@@ -26,7 +26,6 @@ class SettingsProvider extends ChangeNotifier {
 
       _settings = await _db.getSettings();
 
-      // Setup notifications based on settings
       if (_settings.notificationsEnabled) {
         await _notif.scheduleReminder(_settings.reminderInterval);
       }
@@ -38,8 +37,11 @@ class SettingsProvider extends ChangeNotifier {
     }
   }
 
-  // Update settings
-  Future<void> updateSettings(UserSettings newSettings) async {
+  // ✅ UPDATED: Add context parameter untuk sync
+  Future<void> updateSettings(
+    UserSettings newSettings,
+    BuildContext context, // ✅ NEW parameter
+  ) async {
     try {
       _isLoading = true;
       notifyListeners();
@@ -47,7 +49,15 @@ class SettingsProvider extends ChangeNotifier {
       await _db.updateSettings(newSettings);
       _settings = newSettings;
 
-      // Update notifications
+      // ✅ SYNC dengan WaterProvider
+      if (context.mounted) {
+        final waterProvider = Provider.of<WaterProvider>(
+          context,
+          listen: false,
+        );
+        waterProvider.updateDailyTarget(newSettings.dailyTarget);
+      }
+
       if (newSettings.notificationsEnabled) {
         await _notif.scheduleReminder(newSettings.reminderInterval);
       } else {

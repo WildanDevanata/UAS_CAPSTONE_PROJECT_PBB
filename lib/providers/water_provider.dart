@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../models/water_log.dart';
 import '../services/database_service.dart';
-// ❌ HAPUS: import '../services/api_service.dart';
 import '../services/notification_service.dart';
 import '../utils/helpers.dart';
 
 class WaterProvider extends ChangeNotifier {
   final DatabaseService _db = DatabaseService.instance;
-  // ❌ HAPUS: final ApiService _api = ApiService.instance;
   final NotificationService _notif = NotificationService.instance;
 
   List<WaterLog> _todayLogs = [];
@@ -33,8 +31,28 @@ class WaterProvider extends ChangeNotifier {
 
   bool get targetReached => totalToday >= _dailyTarget;
 
+  // ✅ UPDATED: Initialize dengan load target
   Future<void> initialize() async {
+    await loadDailyTarget();
     await loadTodayLogs();
+  }
+
+  // ✅ NEW: Load daily target dari database
+  Future<void> loadDailyTarget() async {
+    try {
+      final settings = await _db.getSettings();
+      _dailyTarget = settings.dailyTarget;
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Failed to load daily target: $e');
+      // Keep default value if error
+    }
+  }
+
+  // ✅ NEW: Update daily target (called from SettingsProvider)
+  void updateDailyTarget(double newTarget) {
+    _dailyTarget = newTarget;
+    notifyListeners();
   }
 
   Future<void> loadTodayLogs() async {
@@ -53,7 +71,6 @@ class WaterProvider extends ChangeNotifier {
     }
   }
 
-  // ✅ UPDATED: Tanpa API sync
   Future<void> addWaterLog({required double amount, File? photo}) async {
     try {
       _setLoading(true);
@@ -65,10 +82,7 @@ class WaterProvider extends ChangeNotifier {
         photoPath: photo?.path,
       );
 
-      // Save to local database ONLY
       await _db.insertWaterLog(log);
-
-      // Reload data
       await loadTodayLogs();
 
       if (targetReached) {
